@@ -14,6 +14,3 @@ Contiene información bruta para cada una de las acciones. Cada accion tiene una
 ### [`./metadata`](./metadata) 
 
 En esta carpeta se guardan archivos que aseguren la trazabilidad de la información. Para cada acción existe un archivo llamado `data_provenance_XX.md`, siendo `XX` el nombre de la acción. En este archivo se guarda un registro de la información, su procedencia, su procesado, etc. 
-
-
-
