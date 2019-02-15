@@ -25,4 +25,3 @@
 
 * Creación de una capa uniforme para esta acción en el nodo Sierra Nevada. 
 * Adecuación a la estructura de base de datos propuesta para la nomenclatura de información espacial. 
-* 
