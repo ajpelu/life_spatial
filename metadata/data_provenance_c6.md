@@ -23,5 +23,6 @@ TODO: Homogeneizar niveles de los diferentes factores
 
 ## Procesamiento 
 
-* `$TODO$` Aclarar dudas con responsables de seguimiento 
+* 2019/02/19 Aclarar dudas con responsables de seguimiento 
+* 2019/02/22 Responsable seguimiento envía nueva capa con la información espacial (JMM) 
 
