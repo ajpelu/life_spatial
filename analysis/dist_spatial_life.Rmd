@@ -29,8 +29,6 @@ library("tidyverse")
 
 ```{r readDataLIFE}
 
-
-
 # C1 
 m <- here::here("raw_data/C1") 
 psylv <- rgdal::readOGR(dsn = m, layer = "psylv", verbose = FALSE, encoding = "UTF-8")

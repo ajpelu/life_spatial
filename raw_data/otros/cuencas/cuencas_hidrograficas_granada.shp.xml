@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xml:lang="es">
+	<idinfo>
+		<citation>
+			<citeinfo>
+				<origin>CONSEJERÍA DE MEDIO AMBIENTE</origin>
+				<pubdate>2002</pubdate>
+				<title Sync="TRUE">cuencas_hidrograficas_granada</title>
+				<geoform Sync="TRUE">vector digital data</geoform>
+				<onlink Sync="TRUE">\\uam01\cartogra\ARCVIEW\temas\Medio_Fisico\Hidrologia\cuencas_hidrograficas_granada.shp</onlink>
+				<ftname Sync="TRUE">cuencas_hidrograficas_granada</ftname></citeinfo>
+		</citation>
+		<descript>
+			<abstract>Contiene  la cartografía de las Cuencas Hidrográficas de la Provincia de Granada. Procede del Sistema de Gestión de Proyectos, PRJ\5351\C9963. Se le ha unido la tabla T12259 (SUBCUENCAS), que contiene los nombres de las subcuencas hidrográficas. Posteriormente se ha seleccionado únicamente las cuencas que se incluyen total o parcialmente dentro de la provincia de Granada.
+La base cartográfica es el ICA 100.000</abstract>
+			<purpose>REQUIRED: A summary of the intentions with which the data set was developed.</purpose>
+			<langdata Sync="TRUE">es</langdata></descript>
+		<timeperd>
+			<timeinfo>
+				<sngdate>
+					<caldate>Realizado en el año 2002</caldate>
+				</sngdate>
+			</timeinfo>
+			<current>2002</current>
+		</timeperd>
+		<status>
+			<progress>Finalizado</progress>
+			<update>No es preciso</update>
+		</status>
+		<spdom>
+			<bounding>
+				<westbc Sync="TRUE">-5.278754</westbc>
+				<eastbc Sync="TRUE">-1.545656</eastbc>
+				<northbc Sync="TRUE">-51.904055</northbc>
+				<southbc Sync="TRUE">-53.596672</southbc>
+			</bounding>
+			<lboundng><leftbc Sync="TRUE">349122.999680</leftbc><rightbc Sync="TRUE">596267.749990</rightbc><bottombc Sync="TRUE">4061351.000006</bottombc><topbc Sync="TRUE">4247360.000115</topbc></lboundng></spdom>
+		<keywords>
+			<theme>
+				<themekt>REQUIRED: Reference to a formally registered thesaurus or a similar authoritative source of theme keywords.</themekt>
+				<themekey>Aguas Superficiales</themekey>
+				<themekey>Cuencas Hidrográficas</themekey>
+				<themekey>Provincia de Granada</themekey>
+			</theme>
+		</keywords>
+		<accconst>REQUIRED: Restrictions and legal prerequisites for accessing the data set.</accconst>
+		<useconst>Realizado a escala 1:100.000. Nivel de semidetalle. Afecta a niveles de escala desde 1:100.000 hasta 1:25.000 incluido.</useconst>
+		<native Sync="TRUE">Microsoft Windows 2000 Version 5.0 (Build 2195) Service Pack 4; ESRI ArcCatalog 8.3.0.800</native>
+		<natvform Sync="TRUE">Shapefile</natvform></idinfo>
+	<dataqual>
+		<lineage>
+			<procstep>
+				<procdesc Sync="TRUE">Metadata imported.</procdesc>
+				<srcused Sync="TRUE">C:\DOCUME~1\MMC\CONFIG~1\Temp\xmlAE.tmp</srcused>
+				<time Sync="TRUE">14015300</time>
+			</procstep>
+			<procstep><procdesc Sync="TRUE">Metadata imported.</procdesc><srcused Sync="TRUE">C:\DOCUME~1\MMC\CONFIG~1\Temp\xmlB1.tmp</srcused><date Sync="TRUE">20050922</date><time Sync="TRUE">14125000</time></procstep></lineage>
+	</dataqual>
+	<spdoinfo>
+		<direct Sync="TRUE">Vector</direct>
+		<ptvctinf>
+			<sdtsterm Name="cuencas_hidrograficas_granada">
+				<sdtstype Sync="TRUE">G-polygon</sdtstype>
+				<ptvctcnt Sync="TRUE">70</ptvctcnt>
+			</sdtsterm>
+			<esriterm Name="cuencas_hidrograficas_granada"><efeatyp Sync="TRUE">Simple</efeatyp><efeageom Sync="TRUE">Polygon</efeageom><esritopo Sync="TRUE">FALSE</esritopo><efeacnt Sync="TRUE">70</efeacnt><spindex Sync="TRUE">TRUE</spindex><linrefer Sync="TRUE">FALSE</linrefer></esriterm></ptvctinf>
+	</spdoinfo>
+	<eainfo>
+		<detailed Name="cuencas_hidrograficas_granada">
+			<enttyp>
+				<enttypl Sync="TRUE">cuencas_hidrograficas_granada</enttypl>
+				<enttypt Sync="TRUE">Feature Class</enttypt><enttypc Sync="TRUE">70</enttypc></enttyp>
+			<attr>
+				<attrlabl Sync="TRUE">FID</attrlabl>
+				<attrdef Sync="TRUE">Internal feature number.</attrdef>
+				<attrdefs Sync="TRUE">ESRI</attrdefs>
+				<attrdomv>
+					<udom Sync="TRUE">Sequential unique whole numbers that are automatically generated.</udom>
+				</attrdomv>
+				<attalias Sync="TRUE">FID</attalias><attrtype Sync="TRUE">OID</attrtype><attwidth Sync="TRUE">4</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl Sync="TRUE">Shape</attrlabl>
+				<attrdef Sync="TRUE">Feature geometry.</attrdef>
+				<attrdefs Sync="TRUE">ESRI</attrdefs>
+				<attrdomv>
+					<udom Sync="TRUE">Coordinates defining the features.</udom>
+				</attrdomv>
+				<attalias Sync="TRUE">Shape</attalias><attrtype Sync="TRUE">Geometry</attrtype><attwidth Sync="TRUE">0</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl Sync="TRUE">AREA</attrlabl>
+				<attalias Sync="TRUE">AREA</attalias><attrtype Sync="TRUE">Number</attrtype><attwidth Sync="TRUE">13</attwidth><atnumdec Sync="TRUE">11</atnumdec></attr>
+			<attr>
+				<attrlabl Sync="TRUE">PERIMETER</attrlabl>
+				<attalias Sync="TRUE">PERIMETER</attalias><attrtype Sync="TRUE">Number</attrtype><attwidth Sync="TRUE">13</attwidth><atnumdec Sync="TRUE">11</atnumdec></attr>
+			<attr>
+				<attrlabl Sync="TRUE">CUENCAS_</attrlabl>
+				<attalias Sync="TRUE">CUENCAS_</attalias><attrtype Sync="TRUE">Number</attrtype><attwidth Sync="TRUE">9</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">CUENCAS_ID</attrlabl>
+				<attalias Sync="TRUE">CUENCAS_ID</attalias><attrtype Sync="TRUE">Number</attrtype><attwidth Sync="TRUE">9</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">CUENCA</attrlabl>
+				<attalias Sync="TRUE">CUENCA</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">2</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">SCUENCA</attrlabl>
+				<attalias Sync="TRUE">SCUENCA</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">2</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">SSCUENCA</attrlabl>
+				<attalias Sync="TRUE">SSCUENCA</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">2</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">SSSCUENCA</attrlabl>
+				<attalias Sync="TRUE">SSSCUENCA</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">2</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">SSSSCUENCA</attrlabl>
+				<attalias Sync="TRUE">SSSSCUENCA</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">2</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">CUEN_AP</attrlabl>
+				<attalias Sync="TRUE">CUEN_AP</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">2</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">SCUEN_AP</attrlabl>
+				<attalias Sync="TRUE">SCUEN_AP</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">2</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">SSCUEN_AP</attrlabl>
+				<attalias Sync="TRUE">SSCUEN_AP</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">2</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">SSSCUEN_AP</attrlabl>
+				<attalias Sync="TRUE">SSSCUEN_AP</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">2</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">CU_SCU</attrlabl>
+				<attalias Sync="TRUE">CU_SCU</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">4</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">CU_SSCU</attrlabl>
+				<attalias Sync="TRUE">CU_SSCU</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">6</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">CU_SSSCU</attrlabl>
+				<attalias Sync="TRUE">CU_SSSCU</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">8</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">CU_SSSSCU</attrlabl>
+				<attalias Sync="TRUE">CU_SSSSCU</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">10</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">CU_CU_AP</attrlabl>
+				<attalias Sync="TRUE">CU_CU_AP</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">12</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">CU_SCU_AP</attrlabl>
+				<attalias Sync="TRUE">CU_SCU_AP</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">14</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">CU_SSCU_AP</attrlabl>
+				<attalias Sync="TRUE">CU_SSCU_AP</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">16</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">CU_SSSCU_A</attrlabl>
+				<attalias Sync="TRUE">CU_SSSCU_A</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">18</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">NOMBRE</attrlabl>
+				<attalias Sync="TRUE">NOMBRE</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">50</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">SNOMBRE</attrlabl>
+				<attalias Sync="TRUE">SNOMBRE</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">50</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">SSNOMBRE</attrlabl>
+				<attalias Sync="TRUE">SSNOMBRE</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">50</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">SSSNOMBRE</attrlabl>
+				<attalias Sync="TRUE">SSSNOMBRE</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">50</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">SSSSNOMBRE</attrlabl>
+				<attalias Sync="TRUE">SSSSNOMBRE</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">50</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">CNOMBRE</attrlabl>
+				<attalias Sync="TRUE">CNOMBRE</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">50</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">SCNOMBRE</attrlabl>
+				<attalias Sync="TRUE">SCNOMBRE</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">50</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">SSCNOMBRE</attrlabl>
+				<attalias Sync="TRUE">SSCNOMBRE</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">50</attwidth></attr>
+			<attr>
+				<attrlabl Sync="TRUE">SSSCNOMBRE</attrlabl>
+				<attalias Sync="TRUE">SSSCNOMBRE</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">50</attwidth></attr>
+		</detailed>
+	</eainfo>
+	<distinfo>
+		<resdesc Sync="TRUE">Downloadable Data</resdesc>
+		<stdorder>
+			<digform>
+				<digtinfo>
+					<transize Sync="TRUE">0,715</transize>
+					<dssize Sync="TRUE">0,715</dssize></digtinfo>
+			</digform>
+		</stdorder>
+	</distinfo>
+	<metainfo>
+		<metd Sync="TRUE">20050922</metd>
+		<metc>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>REQUIRED: The organization responsible for the metadata information.</cntorg>
+					<cntper>REQUIRED: The person responsible for the metadata information.</cntper>
+				</cntorgp>
+				<cntaddr>
+					<addrtype>REQUIRED: The mailing and/or physical address for the organization or individual.</addrtype>
+					<city>REQUIRED: The city of the address.</city>
+					<state>REQUIRED: The state or province of the address.</state>
+					<postal>REQUIRED: The ZIP or other postal code of the address.</postal>
+				</cntaddr>
+				<cntvoice>REQUIRED: The telephone number by which individuals can speak to the organization or individual.</cntvoice>
+			</cntinfo>
+		</metc>
+		<metstdn Sync="TRUE">FGDC Content Standards for Digital Geospatial Metadata</metstdn>
+		<metstdv Sync="TRUE">FGDC-STD-001-1998</metstdv>
+		<mettc Sync="TRUE">local time</mettc>
+		<langmeta Sync="TRUE">es</langmeta><metextns><onlink Sync="TRUE">http://www.esri.com/metadata/esriprof80.html</onlink><metprof Sync="TRUE">ESRI Metadata Profile</metprof></metextns></metainfo>
+	<Esri><MetaID>{B2048A47-66B5-481B-8E2D-DEAB85DEDF64}</MetaID><CreaDate>20050922</CreaDate><CreaTime>14125000</CreaTime><SyncOnce>FALSE</SyncOnce><SyncDate>20050922</SyncDate><SyncTime>14125000</SyncTime><ModDate>20050922</ModDate><ModTime>14135100</ModTime></Esri><dataIdInfo><envirDesc Sync="TRUE">Microsoft Windows 2000 Version 5.0 (Build 2195) Service Pack 4; ESRI ArcCatalog 8.3.0.800</envirDesc><dataLang><languageCode Sync="TRUE" value="es"></languageCode></dataLang><idCitation><resTitle Sync="TRUE">cuencas_hidrograficas_granada</resTitle><presForm><PresFormCd Sync="TRUE" value="005"></PresFormCd></presForm></idCitation><spatRpType><SpatRepTypCd Sync="TRUE" value="001"></SpatRepTypCd></spatRpType><dataExt><geoEle><GeoBndBox esriExtentType="native"><westBL Sync="TRUE">349122.99968</westBL><eastBL Sync="TRUE">596267.74999</eastBL><northBL Sync="TRUE">4247360.000115</northBL><southBL Sync="TRUE">4061351.000006</southBL><exTypeCode Sync="TRUE">1</exTypeCode></GeoBndBox></geoEle></dataExt><geoBox esriExtentType="decdegrees"><westBL Sync="TRUE">-5.278754</westBL><eastBL Sync="TRUE">-1.545656</eastBL><northBL Sync="TRUE">-51.904055</northBL><southBL Sync="TRUE">-53.596672</southBL><exTypeCode Sync="TRUE">1</exTypeCode></geoBox></dataIdInfo><mdLang><languageCode Sync="TRUE" value="es"></languageCode></mdLang><mdStanName Sync="TRUE">ISO 19115 Geographic Information - Metadata</mdStanName><mdStanVer Sync="TRUE">DIS_ESRI1.0</mdStanVer><mdChar><CharSetCd Sync="TRUE" value="004"></CharSetCd></mdChar><mdHrLv><ScopeCd Sync="TRUE" value="005"></ScopeCd></mdHrLv><mdHrLvName Sync="TRUE">dataset</mdHrLvName><distInfo><distributor><distorTran><onLineSrc><orDesc Sync="TRUE">002</orDesc><linkage Sync="TRUE">file://\\uam01\cartogra\ARCVIEW\temas\Medio_Fisico\Hidrologia\cuencas_hidrograficas_granada.shp</linkage><protocol Sync="TRUE">Local Area Network</protocol></onLineSrc><transSize Sync="TRUE">0,715</transSize></distorTran><distorFormat><formatName Sync="TRUE">Shapefile</formatName></distorFormat></distributor></distInfo><spref><horizsys><cordsysn><geogcsn Sync="TRUE">GCS_WGS_1984</geogcsn><projcsn Sync="TRUE">WGS_1984_UTM_Zone_30S</projcsn></cordsysn><planar><planci><plance Sync="TRUE">coordinate pair</plance><plandu Sync="TRUE">meters</plandu><coordrep><absres Sync="TRUE">0.000512</absres><ordres Sync="TRUE">0.000512</ordres></coordrep></planci><gridsys><gridsysn Sync="TRUE">Universal Transverse Mercator</gridsysn><utm><utmzone Sync="TRUE">-30</utmzone><transmer><sfctrmer Sync="TRUE">0.999600</sfctrmer><longcm Sync="TRUE">-3.000000</longcm><latprjo Sync="TRUE">0.000000</latprjo><feast Sync="TRUE">500000.000000</feast><fnorth Sync="TRUE">10000000.000000</fnorth></transmer></utm></gridsys></planar><geodetic><horizdn Sync="TRUE">D_WGS_1984</horizdn><ellips Sync="TRUE">WGS_1984</ellips><semiaxis Sync="TRUE">6378137.000000</semiaxis><denflat Sync="TRUE">298.257224</denflat></geodetic></horizsys></spref><refSysInfo><RefSystem><refSysID><identCode Sync="TRUE">WGS_1984_UTM_Zone_30S</identCode></refSysID></RefSystem></refSysInfo><spatRepInfo><VectSpatRep><topLvl><TopoLevCd Sync="TRUE" value="001"></TopoLevCd></topLvl><geometObjs Name="cuencas_hidrograficas_granada"><geoObjTyp><GeoObjTypCd Sync="TRUE" value="001"></GeoObjTypCd></geoObjTyp><geoObjCnt Sync="TRUE">70</geoObjCnt></geometObjs></VectSpatRep></spatRepInfo><mdDateSt Sync="TRUE">20050922</mdDateSt></metadata>
