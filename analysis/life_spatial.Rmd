@@ -1,0 +1,495 @@
+---
+title: "Seguimientos LIFE ADAPTAMED"
+output: 
+  flexdashboard::flex_dashboard:
+    vertical_layout: fill
+    orientation: rows
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+library('flexdashboard')
+
+```
+
+```{r pacakges, message=FALSE, warning=FALSE}
+library('rgdal')
+library("leaflet") 
+library("sp")
+library("sf")
+library("raster")
+library("dplyr")
+library("here")
+library("mapview")
+library("maptools")
+library("purrr")
+library("tidyverse")
+```
+
+
+```{r, read_c1}
+# Read C1 
+c1 <- rgdal::readOGR(dsn = here::here("data"), layer = "C1", verbose = FALSE, encoding = "UTF-8")
+
+psylv <- subset(c1, spCode == "PS")
+phal <- subset(c1, spCode == "PH")
+ppina <- subset(c1, spCode == "PP")
+pnigra <- subset(c1, spCode == "PN")
+```
+
+```{r, setCRS}
+myCRS <- crs(c1)
+```
+
+
+
+```{r read_aux_forestal}
+# Actuaciones Forestales
+forestalraw <- rgdal::readOGR(dsn=here::here("raw_data/otros/bbdd_forestal"),
+                           layer = 'proy_forestales', verbose = FALSE,
+                           encoding = 'UTF-8')
+proj4string(forestalraw) <- CRS("+init=epsg:23030")
+
+act_forestales <- spTransform(forestalraw, myCRS)
+
+
+dicc_proyectos <- readxl::read_excel(here::here("raw_data/otros/bbdd_forestal/DATOS_PROYECTO.xlsx"))
+dp <- dicc_proyectos %>% 
+  dplyr::select(cod_proyec = ID_PROYECTO, NOMBRE, INICIO, FIN) 
+
+act_forestales <- sp::merge(act_forestales, dp, by="cod_proyec", all.x = TRUE) 
+```
+
+
+
+```{r}
+# Read seguimientos (Pinus)
+# $TODO$ Update 
+
+
+# Suelo 
+sueloraw  <- rgdal::readOGR(dsn = here::here("raw_data/seg_pinus"), layer = "Suelo_Pinus", verbose = FALSE, encoding = "UTF-8")
+
+suelo <- spTransform(sueloraw, crs(psylv))
+
+# AVES 
+avesraw <- rgdal::readOGR(dsn = here::here("raw_data/seg_pinus"), layer = "Aves_Pinus", verbose = FALSE, encoding = "UTF-8")
+aves <- spTransform(avesraw, crs(psylv))
+
+# DISPERSION SEMILLAS CARNIVOROS
+carnivorosraw <- rgdal::readOGR(dsn = here::here("raw_data/seg_pinus"), layer = "Carni_Marip_Pinus", verbose = FALSE, encoding = "UTF-8")
+carnivoros <- spTransform(carnivorosraw, crs(psylv))
+
+# MARIPOSAS DIURNAS 
+mariposasraw <- rgdal::readOGR(dsn = here::here("raw_data/seg_pinus"), layer = "Carni_Marip_Pinus", verbose = FALSE, encoding = "UTF-8")
+mariposas <- spTransform(mariposasraw, crs(psylv))
+
+
+# # C6 -- Arreglar 
+# c6bloque <- rgdal::readOGR(dsn = here::here("raw_data/C6/"), layer = "c6_bloques", verbose = FALSE, encoding = "UTF-8")
+# 
+# c6_actuaciones <- rgdal::readOGR(dsn = here::here("raw_data/C6/"), layer = "20170712_C6_PAR_ACTUACIONES", verbose = FALSE, encoding = "UTF-8")
+# c6_residuos <- rgdal::readOGR(dsn = here::here("raw_data/C6/"), layer = "20170712_C6_PAR_RESIDUOS", verbose = FALSE, encoding = "UTF-8")
+# 
+# c6bloque <- spTransform(c6bloque, crs(psylv))
+# c6_actuaciones <- spTransform(c6_actuaciones, crs(psylv))
+# c6_residuos <- spTransform(c6_residuos, crs(psylv))
+
+
+
+# c5 
+# Acequias 
+# Siembras 
+
+
+```
+
+
+
+```{r, eval = FALSE, message=FALSE,}
+# DENDRO
+
+
+
+dendroraw <- read_csv(here::here("raw_data/dendro/dendroLife.csv"))
+
+
+dendro <- SpatialPointsDataFrame(dendroraw[,c("lat","long")], 
+                                 dendroraw, proj4string = crs(psylv))
+
+```
+
+
+
+
+```{r, read_aux_fires}
+# Incendios
+## Histórico REDIAM 1975 - 2016
+# http://www.juntadeandalucia.es/medioambiente/site/rediam/menuitem.04dc44281e5d53cf8ca78ca731525ea0/?vgnextoid=d07e1cd522a3d310VgnVCM2000000624e50aRCRD&vgnextchannel=1bff7d087270f210VgnVCM1000001325e50aRCRD
+fires_raw <- rgdal::readOGR(dsn=here::here("raw_data/otros/incendios/rediam/"),
+                     layer = 'incendios_historico', verbose = FALSE, encoding = "UTF-8")
+fires <- spTransform(fires_raw, myCRS)
+
+# WMS REDIAM
+# http://www.juntadeandalucia.es/medioambiente/mapwms/REDIAM_historico_incendios?
+# http://www.juntadeandalucia.es/medioambiente/mapwms/REDIAM_historico_areas_recorridas_fuego?
+```
+
+
+
+```{r, readC5}
+# Irrigation channel
+
+acequias_raw <- rgdal::readOGR(dsn=here::here("raw_data/A5"),
+                           layer = 'acequias_pn_snevada', verbose = FALSE,
+                           encoding = 'UTF-8')
+
+acequias <- spTransform(acequias_raw, crs(psylv))
+
+
+siembras_raw <- rgdal::readOGR(dsn = here::here("raw_data/C5"), 
+                              layer = "GEO", verbose = FALSE, encoding = "UTF-8")
+
+siembras <- spTransform(siembras_raw, crs(psylv))
+
+```
+
+
+
+
+```{r, eval=FALSE, message=FALSE}
+# OBSNEV 
+# Importacion bulk de todos los datos existentes en la geodatabase de Linaria 
+# BD_ptos_muestreo_CG__20140211_.zip 
+
+# Using lapply 
+# obsnev <- lapply(ff, raster::shapefile, verbose=TRUE)
+
+# https://lsru.github.io/tv_course/TD_purrr_solution.html
+ob <- list.files(here::here("raw_data/otros/obsnev"), 
+                 pattern = "\\.shp$", full.names = TRUE) %>% 
+  set_names(nm = (basename(.) %>% tools::file_path_sans_ext())) %>% 
+  map(raster::shapefile) %>% 
+  map(spTransform, crs(psylv))
+
+
+obsnev <- map(ob, spTransform, crs(psylv))
+
+
+cabra <- ob[["Cabra"]]
+
+
+
+
+
+
+# obs <- st_read(dsn = here::here("raw_data/otros/obsnev/BD_ptos_muestreo.mdb"))
+# # Listar todas las feature class 
+# 
+# subset(ogrDrivers(), grepl("GDB", name))
+# fc_list <- ogrListLayers(gd)
+# print(fc_list)
+```
+
+
+
+
+```{r configureMap}
+# MAPA 
+
+## popups 
+popup_forestal <- paste0("<strong>BBDD Actuaciones Forestales</strong>",
+                         "<strong>Proyecto:</strong> ", act_forestales$cod_proyec, 
+                         "<br><strong>Nombre:</strong> ", act_forestales$NOMBRE, 
+                         "<br><strong>Inicio:</strong> ", act_forestales$INICIO,
+                         "<br><strong>Fin:</strong> ", act_forestales$FIN)
+
+popup_fires <- paste0("<strong>Fecha Incendio:</strong> ", fires$FECHA,
+                      "<br><strong>Superf. Afectada (has):</strong> ", round(fires$SHAPE_Area, 0))
+
+popup_c1 <- paste0("<strong>Especie: </strong>", c1$ESPECIE,
+                   "<br><strong>Trat.:</strong> ", c1$idTratam,
+                   "<br><strong>Cuadricula:</strong> ", c1$idCuadric)
+
+# colAcequias <- colorFactor(c("Dark blue", "#ff7f00", "#1f78b4", "#a6cee3"),                       acequiasMemolar$Tipolog..a)
+
+popup_suelo <- paste0("<strong>ID</strong>: ", suelo$OBJECTID,
+                     "<br><strong>Cuadricula:</strong> ", suelo$idCuadric)
+
+popup_aves <- paste0("<strong>Estaciones de Escucha Aves</strong>",
+                     "<br><strong>Código:</strong> ", aves$Codigo,
+                     "<br><strong>Variables:</strong> Diversidad, Abundancia")
+
+popup_carnivoros <- paste0("<strong>Dispersion Semillas por Carnívoros</strong>",
+                     "<br><strong>Transecto:</strong> ", carnivoros$Transecto,
+                     "<br><strong>Longitud (m):</strong> ", carnivoros$Longitud,
+                     "<br><strong>Variables:</strong> Índice Abundancia",
+                     "<br>Cantidad Semillas Dispersadas; Especies, Frecuencia de Aparición")
+
+popup_mariposas <- paste0("<strong>Mariposas Diurnas</strong>",
+                     "<br><strong>Transecto:</strong> ", mariposas$Transecto,
+                     "<br><strong>Longitud (m):</strong> ", mariposas$Longitud,
+                     "<br><strong>Variables:</strong> Abundancia; Diversidad; Fenología")
+
+
+# # Tratamientos Forestales 
+# popup_c6bloque <- paste0("<strong>Robledales y Encinares</strong>", 
+#                      "<br><strong>Tratamiento:</strong> ", c6bloque$Tratamnto) 
+# 
+# popup_c6residuos <- paste0("<strong>Robledales y Encinares. Residuos</strong>",
+#                            "<br><strong>Parcela:</strong> ", c6_residuos$PARCELA,
+#                            "<br><strong>Tratamiento:</strong> ", c6_residuos$TRATAM., 
+#                            "<br><strong>RESIDUOS</strong> ", c6_residuos$RESIDUOS) 
+
+# popup_dendro <- paste0("<strong>Dendrocronologia: parcelas</strong>",
+#                            "<br><strong>Size parcela:</strong> ", dendro$radius_m,
+#                            "<br><strong>Tratamiento:</strong> ", dendro$treatment) 
+
+
+
+mymap <- leaflet() %>%
+  addWMSTiles('http://www.ideandalucia.es/wms/mdt_2005?',
+              layers = 'Sombreado_10',
+              options = WMSTileOptions(format = "image/png", transparent = TRUE),
+              attribution = '<a href="http://www.juntadeandalucia.es/institutodeestadisticaycartografia" target="_blank">Instituto de Estadística y Cartografía de Andalucía</a>', 
+              group = 'Hillshade') %>% 
+  addTiles(urlTemplate = "http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+           attribution = '<a href="https://carto.com/attributions">CARTO</a>',
+           group = 'Basemap') %>%
+  addWMSTiles('http://www.ideandalucia.es/services/toporaster10/wms?',
+              layers = 'toporaster10',
+              options = WMSTileOptions(format = "image/png", transparent = FALSE),
+              attribution = '<a href="http://www.juntadeandalucia.es/institutodeestadisticaycartografia" target="_blank">Instituto de Estadística y Cartografía de Andalucía</a>',
+              group = 'Topographical') %>%
+  addWMSTiles('http://www.ideandalucia.es/wms/mta10r_2001-2013?',
+              layers = 'mta10r_2001-2013',
+              options = WMSTileOptions(format = "image/png", transparent = FALSE),
+              attribution = '<a href="http://www.juntadeandalucia.es/institutodeestadisticaycartografia" target="_blank">Instituto de Estadística y Cartografía de Andalucía</a>',
+              group = 'topo2013') %>% 
+    addWMSTiles('http://www.ideandalucia.es/wms/mta10v_2007?',
+              layers = 'mta10v_2007',
+              options = WMSTileOptions(format = "image/png", transparent = FALSE),
+              attribution = '<a href="http://www.juntadeandalucia.es/institutodeestadisticaycartografia" target="_blank">Instituto de Estadística y Cartografía de Andalucía</a>',
+              group = 'topo2007') %>% 
+  addProviderTiles("Esri.WorldImagery", group='Satellite') %>%
+  # Layers control
+  addLayersControl(position = 'bottomright',
+                   baseGroups = c("Hillshade", "Basemap", "Topographical", 
+                                  "Satellite", "topo2013", "topo2007"),
+                   overlayGroups = c("Acción C1",
+                                     "Carnívoros", "Suelo", "Aves", "Mariposas",
+                                     "Incendios",
+                                    "Actuaciones Forestales"),
+                   options = layersControlOptions(collapsed = TRUE)) %>% 
+  # General Layers
+  addPolygons(data = act_forestales,
+                group= 'Actuaciones Forestales',
+                fillColor = 'transparent', color = "yellow",
+                stroke = TRUE, popup = popup_forestal) %>%
+  addPolygons(data = fires,
+                group= 'incendios',
+                fillColor = 'orange', fillOpacity = 0.4,
+                stroke = FALSE, popup = popup_fires) %>% 
+  addPolygons(data = c1, group = 'Acción C1',
+                fillColor = 'green', fillOpacity = 0.4, color = 'green',
+                stroke = TRUE, popup = popup_c1) %>% 
+    addCircles(data = suelo, group = 'Suelo',
+             lng=coordinates(suelo)[,'coords.x1'],
+             lat=coordinates(suelo)[,'coords.x2'],
+             fill="black", color = 'black', weight=.05, popup = popup_suelo) %>%
+    addCircles(data = aves, group = 'Aves',
+             lng=coordinates(aves)[,'coords.x1'],
+             lat=coordinates(aves)[,'coords.x2'],
+             fill="blue", color = 'blue', radius = 25, weight=.9, stroke = TRUE, popup = popup_aves) %>%
+    addPolylines(data=carnivoros, color = "red",
+               group='Carnívoros', weight= 3,
+               popup = popup_carnivoros) %>%
+    addPolylines(data=mariposas, color = "purple",
+               group='Mariposas', weight= 3,
+               popup = popup_mariposas) 
+      # addCircles(data = dendro, group = 'Dendrocronologia',
+      #        lng=coordinates(dendro)[,'long'],
+      #        lat=coordinates(dendro)[,'lat'],
+      #        fill="purple", color = 'purple', radius=15, popup = popup_dendro)
+
+
+```
+
+Acción C1
+===================================== 
+
+Column {.sidebar}
+-----------------------------------------------------------------------
+
+**Adaptación al cambio climático de pinares de repoblación: protección de la provisión de servicios ecosistémicos**.
+<br>
+
+A través de esta acción se implementarán medidas de manejo adaptativo de las masas forestales de pinar de repoblación con el objetivo de proteger los servicios ecosistémicos que proveen, definiendo el modelo de gestión del pinar que mayores servicios socioecológicos proporcione. Esta acción promueve un uso más eficiente de los recursos en estos ambientes a través de la dosificación de la competencia y, por tanto, dota a la masa forestal de una mayor capacidad de resistir procesos sequía e incremento de temperatura.
+
+<br>
+[Mas información](https://www.lifeadaptamed.eu/?page_id=575) 
+
+Column {.tabset}
+-----------------------------------------------------------------------
+### C1 - Pinus sylvestris
+
+```{r}
+
+# Set spatial extension 
+ext <- extent(psylv)  
+  
+mymap %>% 
+    fitBounds(ext@xmin, ext@ymin, ext@xmax, ext@ymax) 
+```
+
+### C1 - Pinus nigra
+
+```{r}
+
+# Set spatial extension 
+ext <- extent(pnigra)  
+  
+mymap %>% 
+    fitBounds(ext@xmin, ext@ymin, ext@xmax, ext@ymax)
+```
+
+### C1 - Pinus pinaster
+
+```{r}
+
+# Set spatial extension 
+ext <- extent(ppina)  
+  
+mymap %>% 
+    fitBounds(ext@xmin, ext@ymin, ext@xmax, ext@ymax)
+```
+
+### C1 - Pinus halepensis
+
+```{r}
+
+# Set spatial extension 
+ext <- extent(psylv)  
+  
+mymap %>% 
+    fitBounds(ext@xmin, ext@ymin, ext@xmax, ext@ymax)
+```
+
+
+Acción C5
+===================================== 
+
+Column {.sidebar}
+-----------------------------------------------------------------------
+
+**Gestión adaptativa para la protección de servicios ecosistémicos ante el cambio climático en matorrales de alta montaña mediterránea**
+
+El objetivo general de esta acción es asegurar un mantenimiento en la cantidad y calidad de servicios ecosistémicos que provee la comunidad de matorrales de alta montaña en Sierra Nevada y en un contexto de cambio climático. El mantenimiento de los servicios se favorecerá a partir de un aumento de la resiliencia del ecosistema, de manera que se incrementen sus probabilidades de adaptarse a la situación de cambio que se prevé. El eje principal de esta acción consiste en la adecuación de dos acequias tradicionales de careo, una en la vertiente norte de Sierra Nevada y otra en la vertiente sur. Paralelamente se ha procedido a la realización de siembras de enebro de montaña (*Juniperus communis*) y de agracejo (*Berberis hispanica*). Algunas de estas siembras se han asociado a las acequias reparadas a fin de valorar el efecto positivo sobre la regeneración que puede involucrar un eventual incremento de aportes hídricos en los micrositios contemplados. 
+
+<br>
+[Mas información](https://www.lifeadaptamed.eu/?page_id=575) 
+
+
+Column {.tabset}
+-----------------------------------------------------------------------
+### C5 - Acequia de Haza Mesa
+
+```{r}
+
+
+pal <- colorFactor(
+  palette = c('blue', 'green', 'red', 'orange', 'purple'),
+  domain = siembras$habitat
+)
+
+siembras$habitatName <- recode(siembras$habitat, 
+                               R = "Roca", B = "Borreguil", 
+                               E = "Enebro", G = "Piorno", P = "Pastizal") 
+
+siembras$site <- ifelse(siembras$replicate < 4, "Haza Mesa", "Bérchules")
+
+hm <- subset(siembras, site == "Haza Mesa")
+ber <- subset(siembras, site == "Bérchules")
+
+
+popup_siembras <- paste0("<strong>Siembras</strong>",
+                     "<br><strong>Código:</strong> ", siembras$cod_sowing,
+                     "<br><strong>Hábitat:</strong> ", siembras$habitatName)
+
+popup_acequias <- paste0("<strong>Código Acequia:</strong> ", acequias$COD_ACEQUI,
+                   "<br><strong>Nombre:</strong> ", acequias$NOM_ACEQUI)
+
+
+mymapc5 <- leaflet() %>%
+  addWMSTiles('http://www.ideandalucia.es/wms/mdt_2005?',
+              layers = 'Sombreado_10',
+              options = WMSTileOptions(format = "image/png", transparent = TRUE),
+              attribution = '<a href="http://www.juntadeandalucia.es/institutodeestadisticaycartografia" target="_blank">Instituto de Estadística y Cartografía de Andalucía</a>', 
+              group = 'Hillshade') %>% 
+  addTiles(urlTemplate = "http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+           attribution = '<a href="https://carto.com/attributions">CARTO</a>',
+           group = 'Basemap') %>%
+  addWMSTiles('http://www.ideandalucia.es/services/toporaster10/wms?',
+              layers = 'toporaster10',
+              options = WMSTileOptions(format = "image/png", transparent = FALSE),
+              attribution = '<a href="http://www.juntadeandalucia.es/institutodeestadisticaycartografia" target="_blank">Instituto de Estadística y Cartografía de Andalucía</a>',
+              group = 'Topographical') %>%
+  addWMSTiles('http://www.ideandalucia.es/wms/mta10r_2001-2013?',
+              layers = 'mta10r_2001-2013',
+              options = WMSTileOptions(format = "image/png", transparent = FALSE),
+              attribution = '<a href="http://www.juntadeandalucia.es/institutodeestadisticaycartografia" target="_blank">Instituto de Estadística y Cartografía de Andalucía</a>',
+              group = 'topo2013') %>% 
+    addWMSTiles('http://www.ideandalucia.es/wms/mta10v_2007?',
+              layers = 'mta10v_2007',
+              options = WMSTileOptions(format = "image/png", transparent = FALSE),
+              attribution = '<a href="http://www.juntadeandalucia.es/institutodeestadisticaycartografia" target="_blank">Instituto de Estadística y Cartografía de Andalucía</a>',
+              group = 'topo2007') %>% 
+  addProviderTiles("Esri.WorldImagery", group='Satellite', 
+                   options = tileOptions(maxZoom = 25)) %>%
+  # Layers control
+  addLayersControl(position = 'bottomright',
+                   baseGroups = c("Hillshade", "Basemap", "Topographical", 
+                                  "Satellite", "topo2013", "topo2007"),
+                   overlayGroups = c("Acción C5", "Acequias",
+                                     "Incendios",
+                                    "Actuaciones Forestales"),
+                   options = layersControlOptions(collapsed = TRUE)) %>% 
+  # General Layers
+  addPolygons(data = act_forestales,
+                group= 'Actuaciones Forestales',
+                fillColor = 'transparent', color = "yellow",
+                stroke = TRUE, popup = popup_forestal) %>%
+  addPolygons(data = fires,
+                group= 'incendios',
+                fillColor = 'orange', fillOpacity = 0.4,
+                stroke = FALSE, popup = popup_fires) %>% 
+    addCircles(data = siembras, group = 'Siembras',
+             lng=coordinates(siembras)[,'coords.x1'],
+             lat=coordinates(siembras)[,'coords.x2'],
+             color = ~pal(habitat), weight= 1, radius = 2, 
+             popup = popup_siembras, opacity = 0.9) %>% 
+  addPolylines(data=acequias, color='blue', 
+               group='Acequias', weight= 3,
+               popup = popup_acequias) 
+```
+
+```{r}
+# Haza Mesa
+
+ext <- extent(hm)  
+mymapc5 %>% 
+     fitBounds(ext@xmin, ext@ymin, ext@xmax, ext@ymax) 
+```
+
+### C5 - Acequia de Bérchules
+
+```{r}
+# Berchules
+
+ext <- extent(ber)  
+mymapc5 %>% 
+     fitBounds(ext@xmin, ext@ymin, ext@xmax, ext@ymax) 
+```
+
+
